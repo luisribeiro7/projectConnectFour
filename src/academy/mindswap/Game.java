@@ -40,8 +40,10 @@ public class Game implements Runnable {
 
                 do {
                     printBoard(board);
-                    System.out.println("It's " + playerChar + " turn to play");
-                    System.out.println("Choose between 0 and 6 please.");
+                    player1.sendMessage("It's " + playerChar + " turn to play");
+                    player2.sendMessage("It's " + playerChar + " turn to play");
+                    player1.sendMessage("Choose between 0 and 6 please.");
+                    player2.sendMessage("Choose between 0 and 6 please.");
                     move = scanner.nextLine();
                 } while (!move.matches("^[0-6]$"));
 
@@ -59,12 +61,17 @@ public class Game implements Runnable {
 
         if (someoneWon) {
             if (playerChar == 'R') {
-                System.out.println("Red won");
+                player1.sendMessage("Red won!");
+                player2.sendMessage("Red won!");
             } else {
-                System.out.println("Yellow won");
+                player1.sendMessage("Yellow won!");
+                player2.sendMessage("Yellow won!");
+
             }
         } else {
-            System.out.println("Draw");
+            player1.sendMessage("Draw!");
+            player2.sendMessage("Draw!");
+
         }
     }
 
@@ -83,21 +90,30 @@ public class Game implements Runnable {
     private void printBoard(char[][] board) {
 
         for (int i = 0; i < board.length; i++) {
-            System.out.print("|");
+            player1.sendMessage("|");
+            player2.sendMessage("|");
             for (int j = 0; j < board[0].length; j++) {
-                System.out.print(board[i][j]);
-                System.out.print("|");
+                player1.sendMessage(String.valueOf(board[i][j]));
+                player2.sendMessage(String.valueOf(board[i][j]));
+                player1.sendMessage("|");
+                player2.sendMessage("|");
+
             }
-            System.out.println();
+            player1.sendMessage("");
+            player2.sendMessage("");
         }
-        System.out.println("---------------");
-        System.out.println(" 0 1 2 3 4 5 6");
-        System.out.println();
+        player1.sendMessage("---------------");
+        player2.sendMessage("---------------");
+        player1.sendMessage(" 0 1 2 3 4 5 6");
+        player2.sendMessage(" 0 1 2 3 4 5 6");
+        player1.sendMessage("");
+        player2.sendMessage("");
     }
 
     private boolean playValidation(char[][] board, int move) {
         if (board[0][move] != ' ') {
-            System.out.println("That column is full, pick another one.");
+            player1.sendMessage("That column is full, pick another one.");
+            player2.sendMessage("That column is full, pick another one.");
             return false;
         }
         return true;
